@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>NoxHotel — Преміум готель (демо)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050507; --card:#0f1113; --muted:#9aa3ad; --accent:#d6b76b; --glass: rgba(255,255,255,0.03);
+  --glass-2: rgba(255,255,255,0.02);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:linear-gradient(180deg,#040406,#0b0b0d);color:#e8eef6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1150px;margin:0 auto;padding:28px}
+header{display:flex;justify-content:space-between;align-items:center;padding:8px 0;color:var(--muted)}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#0f0f12,#262628);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--accent);font-size:20px;box-shadow:0 12px 40px rgba(0,0,0,0.6)}
+nav a{color:var(--muted);margin-left:16px;text-decoration:none;font-weight:700}
+
+/* Hero - premium dark with subtle parallax */
+.hero{position:relative;min-height:620px;border-radius:14px;overflow:hidden;margin-top:18px;background-image:url('https://images.unsplash.com/photo-1501117716987-c8e6d9f1b3a5?auto=format&fit=crop&w=1600&q=80');background-size:cover;background-position:center;display:grid;grid-template-columns:1fr 420px;align-items:center;padding:48px}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,2,3,0.55),rgba(2,2,3,0.85));mix-blend-mode:multiply}
+.hero-card{position:relative;z-index:2;color:var(--accent) }
+h1{margin:0;font-size:40px;line-height:1.02;color:transparent;background:linear-gradient(90deg,var(--accent),#fff);-webkit-background-clip:text;background-clip:text;font-weight:800}
+.lead{color:var(--muted);margin-top:10px;font-size:16px}
+.hero-cta{margin-top:18px;display:flex;gap:12px}
+.btn{padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--accent);cursor:pointer;font-weight:800}
+.btn.primary{background:linear-gradient(90deg,var(--accent),#fff);color:#060606;border:0;box-shadow:0 18px 40px rgba(214,183,107,0.12)}
+
+/* booking panel */
+.book-panel{position:relative;z-index:3;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));backdrop-filter:blur(6px);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);width:380px;color:var(--muted)}
+
+/* features */
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+.feature{background:var(--glass);padding:14px;border-radius:12px;border:1px solid var(--glass-2);transition:transform .28s}
+.feature:hover{transform:translateY(-8px)}
+
+/* gallery */
+.gallery{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-top:22px}
+.gallery-left{height:360px;border-radius:12px;overflow:hidden}
+.gallery-right{display:grid;grid-template-rows:1fr 1fr;gap:12px}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* rooms */
+.rooms{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+.room{background:linear-gradient(180deg,#0d0d0f,#0a0a0c);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);transition:transform .3s}
+.room:hover{transform:translateY(-8px)}
+.room h4{margin:6px 0;color:var(--accent)}
+
+/* testimonials */
+.testi{margin-top:20px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+
+/* fullscreen gallery modal */
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,2,3,0.85);z-index:9999}
+.modal img{max-width:90%;max-height:80%;border-radius:10px;box-shadow:0 40px 100px rgba(0,0,0,0.8)}
+
+/* small animations */
+.fade-in-up{opacity:0;transform:translateY(18px);transition:opacity .7s ease-out, transform .7s ease-out}
+.fade-in-up.visible{opacity:1;transform:none}
+
+/* responsive */
+@media(max-width:980px){
+  .hero{grid-template-columns:1fr;padding:28px 18px;min-height:520px}
+  .book-panel{width:100%}
+  .features{grid-template-columns:1fr 1fr}
+  .gallery{grid-template-columns:1fr;grid-auto-rows:200px}
+  .rooms{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){
+  header{padding:12px}
+  h1{font-size:28px}
+  .rooms{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo">N</div>
+      <div>
+        <div style="font-weight:800">NoxHotel</div>
+        <div style="font-size:12px;color:var(--muted)">Преміум готель • Демонстрація</div>
+      </div>
+    </div>
+    <nav>
+      <a href="#rooms">Номери</a>
+      <a href="#gallery">Галерея</a>
+      <a href="#contact">Контакти</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero fade-in-up" id="hero">
+      <div class="hero-card">
+        <div style="font-weight:800;color:var(--accent)">Нічний релакс • Ексклюзивні умови</div>
+        <h1>Відчуй атмосферу <span style="color:#fff">Nox</span> — відпочинок у місті</h1>
+        <p class="lead">Розташування в центрі, дизайнерські кімнати, персональний сервіс 24/7. Ідеально для робочих поїздок і романтичних вечорів.</p>
+        <div class="hero-cta">
+          <button class="btn primary" onclick="document.getElementById('book-check').scrollIntoView({behavior:'smooth'})">Швидке бронювання</button>
+          <button class="btn" onclick="openGallery(0)">Показати галерею</button>
+        </div>
+        <div style="margin-top:14px;color:var(--muted);font-size:13px">Пропозиція: ранній чек-ін та late check-out по запиту</div>
+      </div>
+
+      <aside class="book-panel fade-in-up" id="book-check" style="margin-left:auto">
+        <div style="font-weight:800;margin-bottom:8px;color:var(--accent)">Забронювати за 2 кліки</div>
+        <label class="small" style="font-size:13px;color:var(--muted)">Дата заїзду</label>
+        <input type="date" id="start" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--accent);margin-top:6px">
+        <label class="small" style="font-size:13px;margin-top:8px;color:var(--muted)">Дата виїзду</label>
+        <input type="date" id="end" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--accent);margin-top:6px">
+        <div style="display:flex;gap:10px;margin-top:12px">
+          <button class="btn primary" onclick="calculate()">Розрахувати</button>
+          <button class="btn" onclick="bookNow()">Бронювати</button>
+        </div>
+        <div id="calc" style="margin-top:10px;color:var(--muted);font-weight:700"></div>
+      </aside>
+    </section>
+
+    <section class="features fade-in-up" aria-label="features">
+      <div class="feature">
+        <div style="font-weight:900;color:var(--accent)">Консьєрж 24/7</div>
+        <div style="color:var(--muted);margin-top:6px">Індивідуальні рекомендації, трансфер, бронювання столів</div>
+      </div>
+      <div class="feature">
+        <div style="font-weight:900;color:var(--accent)">Спа та сауна</div>
+        <div style="color:var(--muted);margin-top:6px">Релакс програми та масажі</div>
+      </div>
+      <div class="feature">
+        <div style="font-weight:900;color:var(--accent)">Ресторан на даху</div>
+        <div style="color:var(--muted);margin-top:6px">Авторська кухня та вид на місто</div>
+      </div>
+    </section>
+
+    <section id="gallery" class="gallery fade-in-up">
+      <div class="gallery-left" onclick="openGallery(0)"><img src="https://images.unsplash.com/photo-1501117716987-c8e6d9f1b3a5?auto=format&fit=crop&w=1400&q=80" alt="room"></div>
+      <div class="gallery-right">
+        <div style="border-radius:12px;overflow:hidden" onclick="openGallery(1)"><img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80" alt="lobby"></div>
+        <div style="border-radius:12px;overflow:hidden" onclick="openGallery(2)"><img src="https://images.unsplash.com/photo-1505691723518-36a2b3e83c8f?auto=format&fit=crop&w=800&q=80" alt="rooftop"></div>
+      </div>
+    </section>
+
+    <section id="rooms" class="rooms fade-in-up">
+      <div class="room">
+        <h4>Делюкс</h4>
+        <div style="color:var(--muted);margin-top:6px">Простора кімната з видом на місто • ціна від 2200 грн/ніч</div>
+      </div>
+      <div class="room">
+        <h4>Стандарт</h4>
+        <div style="color:var(--muted);margin-top:6px">Комфортна кімната для ділових поїздок • ціна від 1500 грн/ніч</div>
+      </div>
+      <div class="room">
+        <h4>Лофт</h4>
+        <div style="color:var(--muted);margin-top:6px">Дизайнерський простір з великою площею • ціна від 3200 грн/ніч</div>
+      </div>
+    </section>
+
+    <section class="testi fade-in-up">
+      <div style="font-weight:900;color:var(--accent)">Відгуки гостей</div>
+      <div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap">
+        <div style="background:linear-gradient(180deg,#0f1113,#0b0b0d);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);min-width:220px">"Чудовий краєвид і бездоганне обслуговування" — Анна</div>
+        <div style="background:linear-gradient(180deg,#0f1113,#0b0b0d);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);min-width:220px">"Ідеально для роботи та відпочинку" — Сергій</div>
+      </div>
+    </section>
+
+    <section id="contact" class="fade-in-up" style="margin-top:20px">
+      <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap">
+        <div style="flex:1;min-width:280px">
+          <h3 style="margin:0;color:var(--accent)">Контакти</h3>
+          <div style="color:var(--muted);margin-top:8px">Адреса: вул. Нічна, 10, [Місто]</div>
+          <div style="color:var(--muted);margin-top:6px">Тел: +38 (0XX) XXX-XX-XX</div>
+        </div>
+        <div style="min-width:240px">
+          <div style="background:linear-gradient(180deg,#0f1113,#071013);padding:12px;border-radius:12px">
+            <div style="font-weight:800">Швидкий контакт</div>
+            <div style="color:var(--muted);margin-top:6px;font-size:13px">Telegram / Viber / Phone</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer style="margin-top:28px;color:var(--muted);display:flex;justify-content:space-between;align-items:center">
+      <div>© NoxHotel — демо</div>
+      <div style="color:var(--muted)">Зроблено для презентацій</div>
+    </footer>
+  </main>
+</div>
+
+<div id="modal" class="modal" onclick="closeModal()"><img id="modalImg" src=""></div>
+
+<script>
+// intersection observer for fade-in
+document.addEventListener('DOMContentLoaded',()=>{
+  const els = document.querySelectorAll('.fade-in-up');
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, {threshold:0.12});
+  els.forEach(e=>obs.observe(e));
+});
+
+// gallery modal
+const galleryImages = [
+  'https://images.unsplash.com/photo-1501117716987-c8e6d9f1b3a5?auto=format&fit=crop&w=1400&q=80',
+  'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1505691723518-36a2b3e83c8f?auto=format&fit=crop&w=800&q=80'
+];
+function openGallery(idx){
+  document.getElementById('modalImg').src = galleryImages[idx];
+  document.getElementById('modal').style.display='flex';
+}
+function closeModal(){document.getElementById('modal').style.display='none'}
+
+// booking calc
+function calculate(){
+  const s = document.getElementById('start').value;
+  const e = document.getElementById('end').value;
+  const calc = document.getElementById('calc');
+  if(!s||!e){ calc.textContent = 'Оберіть дати'; return; }
+  const sd = new Date(s), ed = new Date(e);
+  const nights = Math.max(0, Math.round((ed - sd) / (1000*60*60*24)));
+  if(nights<=0){ calc.textContent = 'Невірні дати'; return; }
+  const perNight = 2200; // demo price base
+  calc.textContent = `Ночей: ${nights} • Орієнтовно: ${nights*perNight} грн`;
+}
+function bookNow(){
+  const s = document.getElementById('start').value;
+  const e = document.getElementById('end').value;
+  if(!s||!e){ alert('Оберіть дати для бронювання'); return; }
+  alert('Дякуємо! Ваш запит на бронювання відправлено. Ми передзвонимо для підтвердження.');
+}
+
+// parallax subtle - move background on scroll
+document.addEventListener('scroll', ()=>{
+  const hero = document.querySelector('.hero');
+  if(!hero) return;
+  const y = window.scrollY * 0.15;
+  hero.style.backgroundPosition = `center ${50 + y}px`;
+});
+</script>
+</body>
+</html>
